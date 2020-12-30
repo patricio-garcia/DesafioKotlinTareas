@@ -12,6 +12,34 @@ class TareaAdapter(private var tareas: ArrayList<Tarea> = ArrayList(), private v
 
     class TareaViewHolder(view: View) : RecyclerView.ViewHolder(view)
 
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TareaViewHolder {
+        val view = LayoutInflater.from(parent.context)
+            .inflate(R.layout.tarea_item, parent, false)
+        return TareaViewHolder(view)
+    }
+
+    override fun getItemCount(): Int {
+        return tareas.size
+    }
+
+    override fun onBindViewHolder(holder: TareaViewHolder, position: Int) {
+        holder.itemView.nombre.text = tareas[position].nombre
+        holder.itemView.tarea_terminada.isChecked = tareas[position].terminada
+        if(holder.itemView.tarea_terminada.isChecked)
+            holder.itemView.setBackgroundColor(ContextCompat.getColor(holder.itemView.context, R.color.tarea_terminada))
+        else
+            holder.itemView.setBackgroundColor(ContextCompat.getColor(holder.itemView.context, R.color.tarea_no_terminada))
+        holder.itemView.tarea_terminada.setOnCheckedChangeListener { buttonView, isChecked ->
+            listener.onTareaChecked(tareas[position], isChecked)
+            if(isChecked)
+                holder.itemView.setBackgroundColor(ContextCompat.getColor(holder.itemView.context, R.color.tarea_terminada))
+            else
+                holder.itemView.setBackgroundColor(ContextCompat.getColor(holder.itemView.context, R.color.tarea_no_terminada))
+        }
+    }
+
+    //Funciones personalizadas
+
     fun agregarTarea(tarea: Tarea) {
         tareas.add(tarea)
         notifyItemInserted(itemCount)
@@ -41,32 +69,6 @@ class TareaAdapter(private var tareas: ArrayList<Tarea> = ArrayList(), private v
         tareas.removeAt(posicionInicial)
         tareas.add(posicionFinal, tarea)
         notifyItemMoved(posicionInicial, posicionFinal)
-    }
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TareaViewHolder {
-        val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.tarea_item, parent, false)
-        return TareaViewHolder(view)
-    }
-
-    override fun getItemCount(): Int {
-        return tareas.size
-    }
-
-    override fun onBindViewHolder(holder: TareaViewHolder, position: Int) {
-        holder.itemView.nombre.text = tareas[position].nombre
-        holder.itemView.tarea_terminada.isChecked = tareas[position].terminada
-        if(holder.itemView.tarea_terminada.isChecked)
-            holder.itemView.setBackgroundColor(ContextCompat.getColor(holder.itemView.context, R.color.tarea_terminada))
-        else
-            holder.itemView.setBackgroundColor(ContextCompat.getColor(holder.itemView.context, R.color.tarea_no_terminada))
-        holder.itemView.tarea_terminada.setOnCheckedChangeListener { buttonView, isChecked ->
-            listener.onTareaChecked(tareas[position], isChecked)
-            if(isChecked)
-                holder.itemView.setBackgroundColor(ContextCompat.getColor(holder.itemView.context, R.color.tarea_terminada))
-            else
-                holder.itemView.setBackgroundColor(ContextCompat.getColor(holder.itemView.context, R.color.tarea_no_terminada))
-        }
     }
 }
 
