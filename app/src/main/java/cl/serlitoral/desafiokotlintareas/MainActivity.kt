@@ -99,7 +99,7 @@ class MainActivity : AppCompatActivity(), TareaAdapterListener {
                 val tareaDescripcion = data!!.extras!!["tarea"] as String
                 val tareaCreada = Tarea(tareaDescripcion, false)
 
-                //Se agrewga la tarea a la BD
+                //Se agrega la tarea a la BD
                 tareaDAO.insertarTarea(tareaCreada)
                 tareaAdapter.agregarTarea(tareaCreada)
             }

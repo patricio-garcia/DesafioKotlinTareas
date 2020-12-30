@@ -45,6 +45,7 @@ class TareaAdapter(private var tareas: ArrayList<Tarea> = ArrayList(), private v
         notifyItemInserted(itemCount)
     }
 
+    //Ya no la utilizo, se cambia por la interface
     fun setTareas(tareas : ArrayList<Tarea>) {
         this.tareas = tareas
         notifyDataSetChanged()

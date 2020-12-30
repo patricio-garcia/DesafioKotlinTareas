@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         style="@style/tareaNombre"
-        android:text="Sacar al perro a pasear"/>
+        android:hint="Nombre de la tarea a realizar"/>
 
     <CheckBox
         android:id="@+id/tarea_terminada"
