@@ -17,7 +17,6 @@ import cl.serlitoral.desafiokotlintareas.task.Tarea
 import cl.serlitoral.desafiokotlintareas.task.TareaAdapter
 import cl.serlitoral.desafiokotlintareas.task.TareaAdapterListener
 import com.google.android.material.snackbar.Snackbar
-import kotlinx.android.synthetic.main.activity_main.*
 
 //Se implementa la interfaz del Adaptador
 class MainActivity : AppCompatActivity(), TareaAdapterListener {
@@ -38,7 +37,7 @@ class MainActivity : AppCompatActivity(), TareaAdapterListener {
         setContentView(binding.root)
 
         tareaDAO = TareaDatabase.getInstance(this).tareaDAO()
-        mainLayout = activity_content
+        mainLayout = binding.activityContent
 
         //Se obtienen las tareas desde la BD
         val tareas = ArrayList<Tarea>(tareaDAO.getTareas())
@@ -93,7 +92,7 @@ class MainActivity : AppCompatActivity(), TareaAdapterListener {
         }
 
         val itemTouchHelper = ItemTouchHelper(itemTouchHelperCallback)
-        itemTouchHelper.attachToRecyclerView(recycler_view)
+        itemTouchHelper.attachToRecyclerView(binding.recyclerView)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
