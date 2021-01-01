@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import cl.serlitoral.desafiokotlintareas.databinding.ActivityMainBinding
 import cl.serlitoral.desafiokotlintareas.orm.TareaDAO
 import cl.serlitoral.desafiokotlintareas.orm.TareaDatabase
 import cl.serlitoral.desafiokotlintareas.task.Tarea
@@ -23,6 +24,8 @@ class MainActivity : AppCompatActivity(), TareaAdapterListener {
 
     val AGREGAR_TAREA_CODE = 1
 
+    lateinit var binding: ActivityMainBinding
+
     lateinit var tareaAdapter : TareaAdapter
     lateinit var mainLayout : ConstraintLayout
     lateinit var tareaDAO: TareaDAO
@@ -30,22 +33,23 @@ class MainActivity : AppCompatActivity(), TareaAdapterListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         tareaDAO = TareaDatabase.getInstance(this).tareaDAO()
-
         mainLayout = activity_content
 
         //Se obtienen las tareas desde la BD
         val tareas = ArrayList<Tarea>(tareaDAO.getTareas())
 
-
         tareaAdapter = TareaAdapter(tareas, this)
-        recycler_view.adapter = tareaAdapter
-        recycler_view.layoutManager = LinearLayoutManager(this)
-        recycler_view.addItemDecoration(DividerItemDecoration(this, LinearLayoutManager.VERTICAL))
 
-        agregar_tarea.setOnClickListener {
+        binding.recyclerView.adapter = tareaAdapter
+        binding.recyclerView.layoutManager = LinearLayoutManager(this)
+        binding.recyclerView.addItemDecoration(DividerItemDecoration(this, LinearLayoutManager.VERTICAL))
+
+        binding.agregarTarea.setOnClickListener {
             startActivityForResult(Intent(this, AgregarTareaActivity::class.java), AGREGAR_TAREA_CODE)
         }
 

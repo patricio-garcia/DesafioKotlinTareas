@@ -5,16 +5,21 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
+import cl.serlitoral.desafiokotlintareas.databinding.ActivityAgregarTareaBinding
 import kotlinx.android.synthetic.main.activity_agregar_tarea.*
 
 class AgregarTareaActivity : AppCompatActivity() {
 
+    private lateinit var binding: ActivityAgregarTareaBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_agregar_tarea)
+
+        binding = ActivityAgregarTareaBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         crear_tarea.setOnClickListener {
-            val tareaDescripcion = tarea.text.toString()
+            val tareaDescripcion = binding.tarea.text.toString()
             if(tareaDescripcion.isEmpty())
                 Toast.makeText(this, "Debes ingresar una tarea", Toast.LENGTH_LONG).show()
             else {
